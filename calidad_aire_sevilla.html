@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f5f7f6">
+<title>Calidad del aire · Sevilla</title>
+<style>
+:root{--bg:#f4f7f5;--card:#fff;--ink:#182521;--muted:#718079;--line:#e6ece8;--green:#20a56b;--yellow:#e5b629;--orange:#ed8734;--red:#dc514d;--purple:#8054bb;--shadow:0 12px 36px rgba(28,54,43,.07)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:34px 22px 48px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:22px}.eyebrow{font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:#648074}.city{font-size:clamp(26px,4vw,38px);letter-spacing:-.045em;margin:4px 0 0}.sub{color:var(--muted);margin:2px 0}.live{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:#fff;border-radius:30px;padding:9px 13px;color:#53645c;font-size:12px;font-weight:700}.dot{width:8px;height:8px;background:var(--green);border-radius:50%;box-shadow:0 0 0 4px #20a56b1a}
+.grid{display:grid;grid-template-columns:1.05fr 1.5fr;gap:18px}.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:24px}.main{display:flex;flex-direction:column;align-items:center;text-align:center;justify-content:center;min-height:330px}.label{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.09em}.gauge{width:194px;height:194px;border-radius:50%;display:grid;place-items:center;margin:14px auto 12px;background:conic-gradient(var(--green) 0deg 0deg,#edf1ee 0deg 360deg);position:relative;transition:background .4s}.gauge:before{content:"";position:absolute;inset:11px;border-radius:50%;background:#fff}.gauge-inner{position:relative;z-index:1}.aqi{font-size:58px;line-height:1;font-weight:800;letter-spacing:-.06em}.aqi-unit{font-size:11px;color:var(--muted);font-weight:700;margin-top:7px}.status{font-size:19px;font-weight:800;margin-top:3px}.updated{font-size:12px;color:var(--muted);margin-top:9px}.scale{display:flex;height:9px;border-radius:20px;overflow:hidden;margin:22px 0 7px;width:100%}.scale span{flex:1}.scale-labels{display:flex;justify-content:space-between;width:100%;font-size:10px;color:var(--muted)}.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.section-head h2{font-size:17px;margin:0;letter-spacing:-.02em}.section-head small{color:var(--muted);font-size:11px}.pollutants{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}.pollutant{border:1px solid var(--line);border-radius:15px;padding:15px 13px;min-height:108px}.p-top{display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:12px;font-weight:700}.p-icon{font-size:16px}.p-value{font-size:24px;font-weight:800;letter-spacing:-.04em;margin-top:12px}.p-unit{font-size:10px;color:var(--muted);font-weight:600}.p-name{font-size:11px;color:var(--muted);margin-top:1px}.bottom{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}.bottom h2{font-size:16px;margin:0 0 12px}.advice{display:flex;gap:12px;align-items:flex-start;color:#42534b;font-size:13px}.advice-icon{font-size:21px}.explain{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px}.explain div{font-size:12px;color:var(--muted)}.explain b{color:var(--ink);display:block;font-size:13px;margin-bottom:2px}.foot{font-size:11px;color:var(--muted);margin:18px 3px 0;line-height:1.6}.foot a{color:#477c65}.error{display:none;background:#fff4f1;border:1px solid #f1c7bd;color:#9b3c2d;padding:12px 14px;border-radius:12px;font-size:13px;margin-top:14px}.source{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);margin-top:12px}.refresh{border:1px solid var(--line);background:white;border-radius:10px;padding:8px 11px;font:inherit;font-size:12px;font-weight:700;color:#42534b;cursor:pointer}.refresh:hover{background:#f5f8f6}.loading{opacity:.65}
+@media(max-width:760px){.wrap{padding:24px 14px 36px}.grid,.bottom{grid-template-columns:1fr}.main{min-height:290px}.panel{padding:20px}.pollutants{grid-template-columns:repeat(2,1fr)}.top{align-items:flex-start}.live{white-space:nowrap}}
+@media(max-width:380px){.pollutants{gap:8px}.pollutant{padding:12px}.p-value{font-size:21px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="top">
+    <div><div class="eyebrow">Monitor ambiental · Andalucía</div><h1 class="city">Sevilla<span style="color:#8aa096">.</span></h1><p class="sub">Sevilla, Andalucía · España</p></div>
+    <div class="live"><span class="dot"></span><span id="connection">Conectando…</span></div>
+  </header>
+
+  <section class="grid">
+    <article class="panel main">
+      <div class="label">Índice de calidad del aire</div>
+      <div class="gauge" id="gauge"><div class="gauge-inner"><div class="aqi" id="aqi">—</div><div class="aqi-unit">ICA · escala EE. UU.</div></div></div>
+      <div class="status" id="status">Esperando datos</div>
+      <div class="updated" id="updated">La hora de actualización aparecerá aquí</div>
+      <div class="scale" aria-label="Escala de calidad del aire">
+        <span style="background:#20a56b"></span><span style="background:#e5b629"></span><span style="background:#ed8734"></span><span style="background:#dc514d"></span><span style="background:#8054bb"></span><span style="background:#7d263c"></span>
+      </div>
+      <div class="scale-labels"><span>Bueno</span><span>Moderado</span><span>Dañino</span><span>Peligroso</span></div>
+      <div class="source">⌖ <span id="station">Fuente: Open-Meteo · modelo atmosférico (no estación local)</span></div>
+    </article>
+
+    <article class="panel">
+      <div class="section-head"><h2>Contaminantes</h2><small>Concentración actual</small></div>
+      <div class="pollutants">
+        <div class="pollutant"><div class="p-top"><span>PM2.5</span><span class="p-icon">◌</span></div><div class="p-value" id="pm25">—</div><div class="p-unit">µg/m³</div><div class="p-name">Partículas finas</div></div>
+        <div class="pollutant"><div class="p-top"><span>PM10</span><span class="p-icon">◌</span></div><div class="p-value" id="pm10">—</div><div class="p-unit">µg/m³</div><div class="p-name">Partículas en suspensión</div></div>
+        <div class="pollutant"><div class="p-top"><span>NO₂</span><span class="p-icon">⌁</span></div><div class="p-value" id="no2">—</div><div class="p-unit">µg/m³</div><div class="p-name">Dióxido de nitrógeno</div></div>
+        <div class="pollutant"><div class="p-top"><span>O₃</span><span class="p-icon">☼</span></div><div class="p-value" id="o3">—</div><div class="p-unit">µg/m³</div><div class="p-name">Ozono</div></div>
+        <div class="pollutant"><div class="p-top"><span>SO₂</span><span class="p-icon">≋</span></div><div class="p-value" id="so2">—</div><div class="p-unit">µg/m³</div><div class="p-name">Dióxido de azufre</div></div>
+        <div class="pollutant"><div class="p-top"><span>CO</span><span class="p-icon">◉</span></div><div class="p-value" id="co">—</div><div class="p-unit">µg/m³</div><div class="p-name">Monóxido de carbono</div></div>
+      </div>
+      <div class="error" id="error" role="alert">No se han podido obtener datos actuales. Comprueba la conexión e inténtalo de nuevo. No se muestran valores estimados ni inventados.</div>
+    </article>
+  </section>
+
+  <section class="bottom">
+    <article class="panel"><h2>¿Qué significa para ti?</h2><div class="advice"><span class="advice-icon" id="adviceIcon">🌿</span><div id="advice">Cuando se reciban los datos, aparecerán aquí recomendaciones adaptadas al nivel de calidad del aire.</div></div></article>
+    <article class="panel"><h2>Qué mide cada indicador</h2><div class="explain">
+      <div><b>PM2.5 y PM10</b>Partículas inhalables; las más finas pueden penetrar profundamente en los pulmones.</div>
+      <div><b>NO₂</b>Gas asociado sobre todo al tráfico y a procesos de combustión.</div>
+      <div><b>O₃</b>Ozono troposférico, contaminante que se forma por reacciones químicas con luz solar.</div>
+      <div><b>SO₂</b>Gas relacionado principalmente con la quema de combustibles con azufre.</div>
+      <div><b>CO</b>Gas tóxico producido por combustiones incompletas.</div>
+    </div></article>
+  </section>
+
+  <div class="foot">
+    Fuente de datos: <a href="https://air-quality-api.open-meteo.com/" target="_blank" rel="noopener">Open-Meteo Air Quality API</a>. Coordenadas de referencia: centro de Sevilla (37.3891, −5.9845). El ICA mostrado es el índice US AQI facilitado por el modelo. Los datos son una estimación modelizada para la ubicación, no una lectura directa de una estación oficial; por ello no se atribuyen a una estación concreta. Para mediciones reglamentarias, consulta la <a href="https://www.juntadeandalucia.es/medioambiente/portal/web/aire" target="_blank" rel="noopener">Red de Vigilancia y Control de la Calidad del Aire de Andalucía</a>. Actualización automática cada 15 minutos.
+    <div style="margin-top:12px"><button class="refresh" id="refresh">↻ Actualizar ahora</button></div>
+  </div>
+</main>
+<script>
+const API="https://air-quality-api.open-meteo.com/v1/air-quality?latitude=37.3891&longitude=-5.9845&current=us_aqi,pm2_5,pm10,nitrogen_dioxide,ozone,sulphur_dioxide,carbon_monoxide&timezone=Europe%2FMadrid";
+const $=id=>document.getElementById(id);
+const levels=[
+ {max:50,label:"Bueno",color:"#20a56b",advice:"La calidad del aire es satisfactoria. Puedes realizar tus actividades habituales al aire libre.",icon:"🌿"},
+ {max:100,label:"Moderado",color:"#e5b629",advice:"La calidad es aceptable. Algunas personas inusualmente sensibles pueden notar efectos leves; presta atención si perteneces a un grupo sensible.",icon:"🌤️"},
+ {max:150,label:"Dañino para grupos sensibles",color:"#ed8734",advice:"Niños, personas mayores y personas con enfermedades respiratorias o cardiovasculares deberían reducir el ejercicio intenso y prolongado al aire libre.",icon:"⚠️"},
+ {max:200,label:"Dañino",color:"#dc514d",advice:"Toda la población puede empezar a notar efectos. Reduce la actividad física intensa al aire libre; los grupos sensibles deberían evitarla.",icon:"🚨"},
+ {max:300,label:"Muy dañino",color:"#8054bb",advice:"Alerta sanitaria: evita el ejercicio al aire libre y reduce la exposición. Los grupos sensibles deberían permanecer en interiores siempre que sea posible.",icon:"⛔"},
+ {max:Infinity,label:"Peligroso",color:"#7d263c",advice:"Situación de riesgo para toda la población. Permanece en interiores, evita esfuerzos y sigue las indicaciones de las autoridades sanitarias.",icon:"🛑"}
+];
+function fmt(v){return Number.isFinite(v)?(Math.round(v*10)/10).toLocaleString("es-ES"):"—"}
+function render(data){
+ const c=data.current||{}, aqi=Number(c.us_aqi);
+ if(!Number.isFinite(aqi)) throw new Error("La API no ha devuelto un ICA válido");
+ const level=levels.find(x=>aqi<=x.max), angle=Math.min(aqi,500)/500*360;
+ $("aqi").textContent=Math.round(aqi);$("status").textContent=level.label;$("status").style.color=level.color;
+ $("gauge").style.background=`conic-gradient(${level.color} 0deg ${angle}deg,#edf1ee ${angle}deg 360deg)`;
+ $("advice").textContent=level.advice;$("adviceIcon").textContent=level.icon;
+ [["pm25","pm2_5"],["pm10","pm10"],["no2","nitrogen_dioxide"],["o3","ozone"],["so2","sulphur_dioxide"],["co","carbon_monoxide"]].forEach(([id,key])=>$(id).textContent=fmt(Number(c[key])));
+ const raw=c.time?new Date(c.time):null;
+ $("updated").textContent="Dato horario: "+(raw&&!isNaN(raw)?raw.toLocaleString("es-ES",{dateStyle:"medium",timeStyle:"short"}):"hora no disponible");
+ $("connection").textContent="Datos recibidos";$("error").style.display="none";
+}
+async function load(){
+ $("connection").textContent="Actualizando…";$("refresh").disabled=true;$("refresh").classList.add("loading");
+ try{
+  const response=await fetch(API,{cache:"no-store"});
+  if(!response.ok)throw new Error("HTTP "+response.status);
+  const data=await response.json();render(data);
+ }catch(e){
+  $("connection").textContent="Sin conexión";$("aqi").textContent="—";$("status").textContent="Datos no disponibles";$("status").style.color="#718079";
+  $("gauge").style.background="conic-gradient(#dfe7e2 0deg 360deg)";
+  ["pm25","pm10","no2","o3","so2","co"].forEach(id=>$(id).textContent="—");
+  $("updated").textContent="No se ha podido actualizar";$("advice").textContent="No es posible ofrecer recomendaciones basadas en datos actuales. Consulta las fuentes oficiales."; $("adviceIcon").textContent="ℹ️";$("error").style.display="block";
+ }finally{$("refresh").disabled=false;$("refresh").classList.remove("loading")}
+}
+$("refresh").addEventListener("click",load);load();setInterval(load,15*60*1000);
+</script>
+</body>
+</html>
